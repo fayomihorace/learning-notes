@@ -84,7 +84,7 @@ class LearningNotes extends React.Component {
 }
 ```
 
-**Important note:***
+**Important note:**
 - While this.props is set up by React itself and this.state has a special meaning, you are free to add additional fields to the class manually if you need to store something that doesn’t participate in the data flow (like a timer ID).
 
 - because `setState` and `props` are updated asynchonously, we shoud not rely on their value to compute the next state like this:
@@ -104,4 +104,73 @@ this.setState((state, props) {
 
 
 ### Handling Events
+Handling events with React elements is very similar to handling events on DOM elements.
+We have mainly 3 ways to use events:
+- 
+```javascript
+class LearningNotes extends React.Component {
+  construstor (props) {
+    super(props)
+    this.state = {
+      selectedNoteId: null,
+      notes: []
+    }
+    this.selectNote = this.selectNote.bind(this)
+  }
+  // simple function
+  selectNote () {
+    // this is available because it has been binded into the constructor
+    this.setState({ selectedNoteId: ... })
+  }
+  render () {
+    return <>
+      {this.state.notes.forEach(note => (
+        <button onClick={this.selectNote}> Note {this.state.note.id} </button>
+      ))}
+    </>
+  }
+ }
+ 
+ - 
+ ```javascript
+ class LearningNotes extends React.Component {
+    constructor (props) {
+      super(props)
+      this.state = {
+        notes: [],
+        selectedNoteId: null
+      }
+      // No binding
+    }
+    selectNote = () => {
+        console.log('called')
+    }
+    render () {
+      return <button onClick={this.selectNote}> Select </button>
+    }
+ }
+ ```
+ -
+ ```javascript
+ class LearningNotes extends React.Component {
+    constructor (props) {
+      super(props)
+      this.state = {
+        notes: [],
+        selectedNoteId: null
+      }
+      // No binding
+    }
+    selectNote () {
+        console.log('called')
+    }
+    render () {
+      return <button onClick={() => this.selectNote()}> Select </button>
+    }
+ }
+ ```
+ 
+ #### Passing Arguments to Event Handlers
+ - `return <button onClick={() => this.selectNote(nodeId)}> </button>`
+ - `return <button onClick={this.selectNote.bind(this, noteId)} </button>`
 
