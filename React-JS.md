@@ -174,3 +174,58 @@ class LearningNotes extends React.Component {
  - `return <button onClick={() => this.selectNote(nodeId)}> </button>`
  - `return <button onClick={this.selectNote.bind(this, noteId)} </button>`
 
+
+### Input
+**Important notes:**
+- In react most inputs are controlled, except `<input type="file" />` which is uncontrolled by default as we can set the
+file programatically, only read it. Though, we can still use input as uncontrolled components using **ref**
+
+
+### Lift the state up
+**Important notes:**
+- In react we should always have a single source of truth for our data. If there a component in same or highter level that need a given
+data it's better to move it the nearest common parent
+
+### Composition vs Inheritance
+#### Composition
+In react we can have something similar to *slot* in VueJS by leveraging the default props **children** and pass the children component
+like this:
+```javascript
+// ParentComponent
+<div>
+    {this.props.children}
+</div>
+
+// Use of the ParentComponent
+<ParentComponent>
+  <SomeChild1 />
+  <SomeChild2 />
+  ...
+</ParentComponent>
+```
+All the children will be accessible inside parent as **props.children**.
+- React is more flexible, as **even components** are objects so can be used like this
+```javascript
+<ParentComponent
+  headerComponent={<Header />}
+  bodyComponent={<Body />}
+  footerComponent={<Footer />}
+>
+
+// Inside the parent
+render () {
+  return (
+    <>
+      <div className="header">
+        {this.props.headerComponent}
+      </div>
+      <div className="body">
+        {this.props.bodyComponent}
+      </div>
+      <div className="footer">
+        {this.props.footerComponent}
+      </div>
+    </>
+  )
+}
+```
