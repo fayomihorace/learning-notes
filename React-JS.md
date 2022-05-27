@@ -1,6 +1,8 @@
 # React Documentation learning notes
 I started react last year in 2021, since that time, I was working on a side project (MasterTheDocs) with, but I didn't really took time to 
 go through all its documentation just to have a global overview. That is what I started and here are my notes about it.
+
+##### *Next.js, Gatsby*
 __________
 ## MAIN CONCEPTS
 
@@ -234,4 +236,29 @@ render () {
 
 ____
 ## Advanced topic
+### Code-Splitting
+- React allow us to split up the bundle into small ones and load them on need at run time to improve the speed of our website.
+- We have many 3 ways to do that:
+    - *dynamic import*
+    - Combination of *React.lazy* and *React.Suspense*
+    - Lazyloading routes using *React router* library + Suspense + React.lazy
+
+### Context
+The context is used to share across all components down the tree a global value like theme.
+We can share as well a method to update the context value.
+This is possible by:
+- creating a context using `React.createContext`
+- Using a Context Provider from the created context `MyContext.Provider`
+- use the context into children either with `MyContext.Consumer` or by setting the attribute `contextType` of the child component as `MyContext`
+
+**Important note:**
+- **If the context value is static**
+```javascript
+value={{somehting: 2}}
+```
+Then each time the Context provider's parent will re-render , all the children consumers will rerender as well because a new object will be created
+each time. So because react works using refs, it's better to link the value to a variable in the state:
+```javascript
+value={this.state.contextValue}
+```
 
