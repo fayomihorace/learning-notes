@@ -261,4 +261,16 @@ each time. So because react works using refs, it's better to link the value to a
 ```javascript
 value={this.state.contextValue}
 ```
+- A child component could override the context before passing it down to his children
+- a child component listen to the nearest context in the tree
+
+### Error boundary
+Basicallly, **Error boundaries** are just react components that catch any errors that occurs in their child component
+tree and display a fallback UI. They catch error during **rendering**, **lifecycle** methods and **constructor**.
+But **they don't catch errors that occurs in**:
+- asynchronous functions
+- event call back
+- in their host parent or above it.
+
+### Forwarding Refs
 
