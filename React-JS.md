@@ -106,11 +106,12 @@ this.setState((state, props) {
 ```
 - In react **data flow down** also known as **unidirectionnal** flow
 
-
 ### Handling Events
+
 Handling events with React elements is very similar to handling events on DOM elements.
+
 We have mainly 3 ways to use events:
-- 
+- First way 
 ```javascript
 class LearningNotes extends React.Component {
   construstor (props) {
@@ -135,7 +136,7 @@ class LearningNotes extends React.Component {
   }
  }
  
- - 
+ - second way
  ```javascript
  class LearningNotes extends React.Component {
     constructor (props) {
@@ -154,7 +155,7 @@ class LearningNotes extends React.Component {
     }
  }
  ```
- -
+ - Third way
  ```javascript
  class LearningNotes extends React.Component {
     constructor (props) {
