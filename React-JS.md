@@ -274,4 +274,51 @@ But **they don't catch errors that occurs in**:
 - in their host parent or above it.
 
 ### Forwarding Refs
+Ref forwarding is a technique for automatically passing a ref through a component to one of its children.
+It's a feature of react that allows a parent component to access the DOM of a element among his children in order to perform
+DOM manipulation like:
+- focus
+- selection
+- animation
+- ...
+
+### Fragments
+In React, fragments are components `<React.Fragment />` that allows you to group some elements without adding extra nodes to the DOM.
+And they have a shortcut that is
+```javascript
+<>
+</>
+```
+Currently the component allow the `key` attribute.
+
+### Higher-Order component
+It's a pure javascript function, that takes a component as argument, improves it, and return a new component.
+It allows reusablity of a given pattern or logic.
+
+**Caveats:**
+- **Don't use HOC insde render method**, because as it will create a new component each time when render update, instead if diffing and only
+update what has changed.
+- Instead Apply HOC outside the component definition
+- **Static methods of the wrapped components are not passed by default**. You need to pass them manually like this:
+```javascript
+function hocEnhancer (wrappedComponent) {
+  class EnhancedComponent extends React.Component {
+      ...
+  }
+  EnhancedComponent.staticMethod = wrappedComponent.staticMethod
+  return EnhancedComponent
+}
+```
+or we can use *hoistAllNonReactMethods*
+
+```javascript
+import hoistNonReactStatic from 'hoist-non-react-statics';
+function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  hoistNonReactStatic(Enhance, WrappedComponent);
+  return Enhance;
+}
+```
+- **key** and **ref** are not really **props**. They are handled specially by React.
+- So **Refs Aren’t Passed Through**, and to circumvent that, you can use **Forwarding ref**.
 
