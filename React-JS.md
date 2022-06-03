@@ -241,16 +241,39 @@ ____
 - React allow us to split up the bundle into small ones and load them on need at run time to improve the speed of our website.
 - We have many 3 ways to do that:
     - *dynamic import*
+      ```javascript
+      import("./math").then(math => {
+        console.log(math.add(16, 26));
+      });
+      ```
     - Combination of *React.lazy* and *React.Suspense*
+        ```javascript
+          <div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <OtherComponent />
+            </Suspense>
+          </div>
+        ```
     - Lazyloading routes using *React router* library + Suspense + React.lazy
+    - We can laso name the routes for the DevTools by overriding `displayName` of the 
 
 ### Context
 The context is used to share across all components down the tree a global value like theme.
 We can share as well a method to update the context value.
+A component could consume more than one context.
+
 This is possible by:
 - creating a context using `React.createContext`
 - Using a Context Provider from the created context `MyContext.Provider`
 - use the context into children either with `MyContext.Consumer` or by setting the attribute `contextType` of the child component as `MyContext`
+- We can also names the context for the DevTools
+```javascript
+const MyContext = React.createContext(/* some value */);
+MyContext.displayName = 'MyDisplayName';
+
+<MyContext.Provider> // "MyDisplayName.Provider" in DevTools
+<MyContext.Consumer> // "MyDisplayName.Consumer" in DevTools
+```
 
 **Important note:**
 - **If the context value is static**
@@ -322,3 +345,64 @@ function enhance(WrappedComponent) {
 - **key** and **ref** are not really **props**. They are handled specially by React.
 - So **Refs Aren’t Passed Through**, and to circumvent that, you can use **Forwarding ref**.
 
+### JXS in deep
+- JXS support dot (`.`) naming
+```javascript
+function BlueDatePicker() {
+  return <MyComponents.DatePicker color="blue" />;
+}
+```
+- JXS can't choose component at runtime
+```javascript
+function Story(props) {
+  // Wrong! JSX type can't be an expression.
+  return <components[props.storyType] story={props.story} />;
+}
+
+function Story(props) {
+  const SpecificStory = components[props.storyType];
+  // Correct! JSX type can be a capitalized variable.
+  return <SpecificStory story={props.story} />;
+}
+```
+- **If we define a props and pass no value to it, it automatically take value `true`**. Though it's advised to always set a value.
+```javascript
+<MyTextBox autocomplete />  === <MyTextBox autocomplete={true} />
+```
+- We can spead attributes:
+```javascript
+const props = {firstname: "Horace", lastname: "FAYOMI"}
+return <User {...props} />
+// or
+function CustomButton (props) {
+  let {color, otherProps} = props
+  let class = color === 'blue' ? 'primary' : 'secondary'
+  return <button  className={class} {...otherProps} />
+}
+```
+- **A React component can also return an array of elements**:
+```javascript
+render() {
+  // No need to wrap list items in an extra element!
+  return [
+    // Don't forget the keys :)
+    <li key="A">First item</li>,
+    <li key="B">Second item</li>,
+  ];
+}
+```
+- **React components can take functions as children**:
+```javascript
+return (
+  <Repeat numTimes={10}>
+    {(index) => <div key={index}>This is item {index} in the list</div>}
+  </Repeat>
+);
+```
+- Booleans, Null, and Undefined Are Ignored. **false, null, undefined, and true are valid children. They simply don’t render**. 
+```javascript
+// Here 0 will be printed if messages = []. Make sure the first expression is boolean.
+<div>
+  {props.messages.length && <MessageList messages={props.messages} />}
+</div>
+```
