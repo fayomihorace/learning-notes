@@ -406,3 +406,18 @@ return (
   {props.messages.length && <MessageList messages={props.messages} />}
 </div>
 ```
+
+### Optimizing Performance
+- User production files
+- User DevTool profiling tool
+- Virtualize Long Lists
+- Define **shouldComponentUpdate** lifecycle method to avoid useless **Reconciliation** that you migh notice:
+```javascript
+shouldComponentUpdate(nextState, nextProps) {
+   if (this.props.color !== nextProps.color) return true;
+   return false;
+}
+```
+Or we can use ***React.PureComponent***.
+React.PureComponent is similar to React.Component. The difference between them is that **React.Component doesn’t implement shouldComponentUpdate(), but React.PureComponent implements it** with a shallow prop and state comparison (*If these contain complex data structures, it may produce false-negatives for deeper differences. For instance if one of the props is an arrays, the shallow comparision will end up with true even if the array items change. A solution is the not mutate the data but assign the new created object by using either `Object.assign({}, state.data)` or `array.contact` or `[...araray]`, `{...data}`*).
+If your React component’s render() function renders the same result given the same props and state, you can use React.PureComponent for a performance boost in some cases.
