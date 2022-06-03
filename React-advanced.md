@@ -239,4 +239,22 @@ render () {
 - Inserting an element at the beginning has worse performance.
 
 
+### Render prop
+It's a prop that carry a function that return a component. It's usefull when a component that has it state or logic encapsulated whant to share it with another in a flexible way.
+
+**Important**
+- Render props should be used carefully when dealing with `PureComponents` because the comparision of changes could most of times falls down to `false`
+because at each render, new object might be created (`render={() => return <SomeComponent/>}`, Instead it's better to have a named class method that return the component so the reference is kept.)
+
+
+### Strict mode
+StrictMode is a tool for highlighting potential problems in an application. Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants.
+Strict mode checks are run in development mode only; they do not impact the production build.
+
+### Typechecking With PropTypes
+It's the internal type checking of react.
+- We can **Requiring Single Child With PropTypes.element**
+- We can also define default values for props
+- They could also be added into function components
+
 
