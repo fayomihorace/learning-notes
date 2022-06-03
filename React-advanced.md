@@ -64,6 +64,20 @@ But **they don't catch errors that occurs in**:
 - event call back
 - in their host parent or above it.
 
+## Refs
+Refs allow to access the dom elements to performs some actions outside React flow like:
+- focus, text selection, media manipulation
+- triggering animation
+- integrating with third party libraries
+
+- You can set ref only on class component. Not on function components because they don't have instance. instead use forwarding ref
+if you want to use it in function components. But we can still use *ref* inside a function component.
+```javascript
+let ref = React.CreateRef
+<Component ref={ref} />
+```
+- We can also use ***Callback Refs*** a function version of refs.
+
 ### Forwarding Refs
 Ref forwarding is a technique for automatically passing a ref through a component to one of its children.
 It's a feature of react that allows a parent component to access the DOM of a element among his children in order to perform
@@ -218,3 +232,11 @@ render () {
 **Important:**
 - Profilers can be nested
 - Profiling adds some additional overhead, so it is disabled in the production build.
+
+
+### reconciliation algorithm
+**Important:**
+- Inserting an element at the beginning has worse performance.
+
+
+
