@@ -192,3 +192,27 @@ React.PureComponent is similar to React.Component. The difference between them i
 *If these contain complex data structures, it may produce false-negatives for deeper differences. For instance if one of the props is an arrays, the shallow comparision will end up with true even if the array items change. A solution is the not mutate the data but assign the new created object by using either `Object.assign({}, state.data)` or `array.contact` or `[...araray]`, `{...data}`*.
 
 If your React component’s render() function renders the same result given the same props and state, you can use React.PureComponent for a performance boost in some cases.
+
+### Portals
+A portal allow a component to render some children into a root node different than the parent root node.
+***A typical use case for portals is when a parent component has an overflow: hidden or z-index style, but you need the child to visually “break out” of its container. For example, dialogs, hovercards, and tooltips.***
+**Important:**
+- Even though a portal can be anywhere in the DOM tree, it behaves like a normal React child in every other way. Features like context work exactly the same regardless of whether the child is a portal, as the portal still exists in the React tree regardless of position in the DOM tree. So even if ComponentA and ComponentB are siblings in the dom node, if ComponentA render ComponentB (ComponentB is a children in the React tree of componentA), ComponentB will have the same behavior as another child that is on the same root as ComponentA.
+```javascript
+ReactDOM.createPortal(child, domNode)
+```
+
+### Profiler API
+The Profiler measures how often a React application renders and what the “cost” of rendering is. Its purpose is to help identify parts of an application that are slow and may benefit from optimizations such as memoization.
+```javascript
+render () {
+    return (
+        <Profiler id="Myprofiler" onRender={renderCallback}>
+            ...
+        </Profile>
+    )
+}
+```
+**Important:**
+- Profilers can be nested
+- Profiling adds some additional overhead, so it is disabled in the production build.
