@@ -114,6 +114,8 @@ function enhance(WrappedComponent) {
 - So **Refs Aren’t Passed Through**, and to circumvent that, you can use **Forwarding ref**.
 
 ### JXS in deep
+- JXS is not a requirement to use React. It's just more convenient. Using React without JSX could be convenient especially when you don’t want to set up compilation in your build environment.
+- Each JSX element is just syntactic sugar for calling ***`React.createElement(component, props, ...children)`***
 - JXS support dot (`.`) naming
 ```javascript
 function BlueDatePicker() {
