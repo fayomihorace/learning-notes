@@ -1,9 +1,8 @@
+## React Hooks
 Hello, these are my notes about React hooks.
 
 Simply speaking, hooks are features that allows you using state and other react features without writing a class.
 **You can't use Hooks inside class components.**
-
-### Hooks at a Glance
 
 #### Rules of Hooks
 Hooks are JavaScript functions, but they impose two additional rules:
@@ -11,6 +10,7 @@ Hooks are JavaScript functions, but they impose two additional rules:
 - **Only call Hooks at the top level. Don’t call Hooks inside loops, conditions, or nested functions**.
 - **Only call Hooks from React function components. Don’t call Hooks from regular JavaScript functions**. (There is just one other valid place to call Hooks — your own custom Hooks. We’ll learn about them in a moment.)
 
+____
 #### useState()
 The more used hook. It's allows manipulating state variables.
 It's a function that takes one parameter (initial value) and return a array of a pair:
@@ -25,13 +25,55 @@ MyFunctionComponent function () {
   )
 }
 ```
-- **`useState()` doesn't merge previous state value with new one like `setState()`**
+- **`useState()` doesn't merge previous state value with new one like `setState()m instead it replace it.`**
 
-
+____
 #### useEffect()
 It serves the same purpose as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in React classes,
 but unified into a single API.
 
-- Effects may also optionally specify how to “clean up” after them by returning a function. Exemples:
-      - the effect is to subscribe to an API, and the cleaning is to unsubscribe.
+```javascript
+useEffect(() => console.log('Something has changed'))
+```
+
+- **useEffect run after every render, By default, it runs both after the first render and after every update**.
+But we can customize that
+- Unlike componentDidMount or componentDidUpdate, effects scheduled with useEffect don’t block the browser from updating the screen. This makes your app feel more responsive.
+
+
+##### Effects Without Cleanup
+
+
+##### Effects with cleanup
+**Some action need to be clean up otherwise that will introduce memory leaks**.
+
+Effects may also optionally specify how to “clean up” after them by returning a function. Exemples:
+- the effect is to subscribe to an API, and the cleaning is to unsubscribe.
 - 
+
+___
+#### useContext()
+
+
+____
+#### useReducder()
+
+
+____
+### Additional Hooks
+useReducer
+useCallback
+useMemo
+useRef
+useImperativeHandle
+useLayoutEffect
+useDebugValue
+useDeferredValue
+useTransition
+useId
+
+### Library Hooks
+useSyncExternalStore
+useInsertionEffect
+
+
