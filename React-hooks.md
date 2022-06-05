@@ -41,6 +41,9 @@ But we can customize that
     document.title = `You clicked ${count} times`;
   }, [count]); 
   ```
+- If you want to run an effect and clean it up only once (on mount and unmount), you can pass an empty array ([]) as a second argument. This tells React that your effect doesn’t depend on any values from props or state, so it never needs to re-run
+- **We recommend using the exhaustive-deps rule as part of our eslint-plugin-react-hooks package. It warns when dependencies are specified incorrectly and suggests a fix.**
+
 
 ##### Effects Without Cleanup
 ```javascript
