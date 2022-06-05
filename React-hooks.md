@@ -32,24 +32,27 @@ ____
 It serves the same purpose as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in React classes,
 but unified into a single API.
 
-```javascript
-useEffect(() => console.log('Something has changed'))
-```
-
 - **useEffect run after every render, By default, it runs both after the first render and after every update**.
 But we can customize that
 - Unlike componentDidMount or componentDidUpdate, effects scheduled with useEffect don’t block the browser from updating the screen. This makes your app feel more responsive.
 
 
 ##### Effects Without Cleanup
-
+```javascript
+useEffect(() => console.log('Something has changed'))
+```
 
 ##### Effects with cleanup
 **Some action need to be clean up otherwise that will introduce memory leaks**.
 
 Effects may also optionally specify how to “clean up” after them by returning a function. Exemples:
 - the effect is to subscribe to an API, and the cleaning is to unsubscribe.
-- 
+- manually created dom Element that will only be used by the component
+- timers
+- event handlers
+**React also cleans up effects from the previous render before running the effects next time. This helps avoid bugs.**
+But we can remove that behavior in case it creates performance issues later below.
+
 
 ___
 #### useContext()
