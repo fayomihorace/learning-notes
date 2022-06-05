@@ -44,7 +44,8 @@ React treats components starting with lowercase letters as DOM tags.
 - State: a component state is basically a kind of local store for that component. It's the place where we store the variables that use to change.
 - Lifecycle methods: they are methods that allows us to execute action at different level of react lifecycle
     - *componentDidMount()* : runs after the component output has been rendered to the DOM
-    - 
+    - *componentDidUpdate()*: Forgetting to handle componentDidUpdate properly is a common source of bugs in React applications. Because it will create inconsistency if some props change.
+
 Example:
 ```javascript
 class LearningNotes extends React.Component {
