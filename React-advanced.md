@@ -109,6 +109,11 @@ update what has changed.
 function hocEnhancer (wrappedComponent) {
   class EnhancedComponent extends React.Component {
       ...
+      render() {
+          // ... and renders the wrapped component with the fresh data!
+          // Notice that we pass through any additional props
+          return <WrappedComponent data={this.state.data} {...this.props} />;
+        }
   }
   EnhancedComponent.staticMethod = wrappedComponent.staticMethod
   return EnhancedComponent
