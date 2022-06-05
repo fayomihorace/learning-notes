@@ -89,7 +89,7 @@ class LearningNotes extends React.Component {
 **Important note:**
 - While this.props is set up by React itself and this.state has a special meaning, you are free to add additional fields to the class manually if you need to store something that doesn’t participate in the data flow (like a timer ID).
 - **ComponentWillUnmount** is used as a cleaner methods, used to clean **Event listeners**, **Timers** and **DOM elements** manually inserted by us
-in the lifecycle of the component.
+in the lifecycle of the component and subscriptions or connection established to **third party libraries**.
 
 - because `setState` and `props` are updated asynchonously, we shoud not rely on their value to compute the next state like this:
 ```javascript
