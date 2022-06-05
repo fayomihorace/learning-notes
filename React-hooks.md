@@ -35,7 +35,12 @@ but unified into a single API.
 - **useEffect run after every render, By default, it runs both after the first render and after every update**.
 But we can customize that
 - Unlike componentDidMount or componentDidUpdate, effects scheduled with useEffect don’t block the browser from updating the screen. This makes your app feel more responsive.
-
+- **Listen to change of a particular given state or prop**
+   ```javascript
+   useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count]); 
+  ```
 
 ##### Effects Without Cleanup
 ```javascript
