@@ -5,6 +5,9 @@ Simply speaking, hooks are features that allows you using state and other react 
 **You can't use Hooks inside class components.**
 
 #### Rules of Hooks
+
+***Helpfull extension: eslint-plugin-react-hooks***
+
 Hooks are JavaScript functions, but they impose two additional rules:
 
 - **Only call Hooks at the top level. Don’t call Hooks inside loops, conditions, or nested functions**.
@@ -30,7 +33,26 @@ MyFunctionComponent function () {
 ____
 #### useEffect()
 It serves the same purpose as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in React classes,
-but unified into a single API.
+but unified into a single API. It accept a function as argument.
+```javascript
+useEffect(didUpdate)
+```
+**Side effects are not allowed inside the main body of a function component (referred to as React’s render phase). Doing so will lead to confusing bugs and inconsistencies in the UI.**
+
+That why we should do them inside **useEffect** instead.
+
+***Note: A sie effect is anything that affects something outside the scope of the function being executed.***.
+Example of sides effects are:
+- Setting the page title imperatively
+- Working with timers like setInterval or setTimeout
+- Measuring the width, height, or position of elements in the DOM
+- Inserting element to the dom 
+- Logging messages to the console or other service (Error tracking calls to Sentry)
+- Setting or getting values in local storage
+- Interacting with an API (authentication, fetch data, mutations, ...)
+- Subscribing and unsubscribing to services of third party libraries
+- Direct dom event listeners
+
 
 - **useEffect run after every render. By default, it runs both after the first render and after every update**. This is usefull to keep consistency accross the rendering if for instance a prop has changed.
 - 
@@ -52,7 +74,7 @@ useEffect(() => console.log('Something has changed'))
 ```
 
 ##### Effects with cleanup
-**Some action need to be clean up otherwise that will introduce memory leaks**.
+**Some side effects need to be clean up otherwise that will introduce memory leaks**.
 
 Effects may also optionally specify how to “clean up” after them by returning a function. Exemples:
 - the effect is to subscribe to an API, and the cleaning is to unsubscribe.
@@ -60,29 +82,108 @@ Effects may also optionally specify how to “clean up” after them by returnin
 - timers
 - event handlers
 **React also cleans up effects from the previous render before running the effects next time. This helps avoid bugs.**
-But we can remove that behavior in case it creates performance issues later below.
 
-
-___
-#### useContext()
-
-
-____
-#### useReducder()
 
 
 ____
 ### Additional Hooks
-useReducer
-useCallback
-useMemo
-useRef
-useImperativeHandle
-useLayoutEffect
-useDebugValue
-useDeferredValue
-useTransition
-useId
+
+___
+#### useContext()
+useContext(MyContext) is equivalent to static `contextType = MyContext` in a class, or to `<MyContext.Consumer>`.
+`useContext(MyContext)` only lets you read the context and subscribe to its changes. You still need a `<MyContext.Provider>` above in the tree to provide the value for this context.
+
+____
+#### useReducder()
+`useReducer` is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
+
+```javascript
+const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+```
+
+- **Lazy initialization**
+We can also create the initial state lazily. To do this, you can pass an init function as the third argument. 
+It lets you extract the logic for calculating the initial state outside the reducer. This is also handy for resetting the state later in response to an action.
+
+```javascript
+function init(initialCount) {
+  return {count: initialCount};
+}
+
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  ...
+}
+```
+
+
+____
+#### useCallback()
+Syntax: 
+
+```javascript
+const memoizedCallback = useCallback(() => { //.. do something with a & b }, [a, b])
+```
+It returns a memoized function (or callback).
+
+It accepts two arguments - "function" and "dependency" array. It will return new i.e. re-created function only when one of the dependencies has changed, or else it will return the old i.e. memoized one.
+
+**Every time a component re-renders, its functions get recreated, so they change**.
+
+
+____
+#### useMemo()
+It returns a memorized value that change only if one of the dependencies change.
+It's usefull to avoid expensive computation (map, filter, ...) unnecessarily.
+
+____
+#### useRef()
+
+
+____
+#### useImperativeHandle()
+
+
+____
+#### useLayoutEffect()
+
+____
+#### useDebugValue()
+
+
+____
+#### useDeferredValue()
+
+
+____
+#### useTransition()
+
+
+____
+#### useId()
+
 
 ### Library Hooks
 useSyncExternalStore
