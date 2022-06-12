@@ -160,18 +160,37 @@ It's usefull to avoid expensive computation (map, filter, ...) unnecessarily.
 - **If no array is provided, a new value will be computed on every render.**
 ____
 #### useRef()
-
+Provide ability to store ref without state in a function component.
 
 ____
 #### useImperativeHandle()
+useImperativeHandle customizes the instance value that is exposed to parent components when using ref. As always, imperative code using refs should be avoided in most cases. useImperativeHandle should be used with forwardRef:
+```javascript
+function FancyInput(props, ref) {
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current.focus();
+    }
+  }));
+  return <input ref={inputRef} ... />;
+}
+FancyInput = forwardRef(FancyInput);
+```
+In this example, a parent component that renders <FancyInput ref={inputRef} /> would be able to call inputRef.current.focus().
 
 
 ____
 #### useLayoutEffect()
 
+The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+
+Prefer the standard useEffect when possible to avoid blocking visual updates.
+
 ____
 #### useDebugValue()
-
+useDebugValue can be used to display a label for custom hooks in React DevTools.
+- **React don’t recommend adding debug values to every custom Hook. It’s most valuable for custom Hooks that are part of shared libraries.**
 
 ____
 #### useDeferredValue()
@@ -192,4 +211,14 @@ useInsertionEffect
 
 ____
 ### FAQ
+
+#### React is Declarative - What Does it Mean?
+In imperative mode, we add step by step code to follow the proccess, but in declarative the just return the desired state accroding to some
+conditions or variables.
+(https://alexsidorenko.com/blog/react-is-declarative-what-does-it-mean/)[exemple]
+
+
+#### Server side rendering
+https://www.heavy.ai/technical-glossary/server-side-rendering
+
 
