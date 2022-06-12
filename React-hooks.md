@@ -157,7 +157,7 @@ ____
 #### useMemo()
 It returns a memorized value that change only if one of the dependencies change.
 It's usefull to avoid expensive computation (map, filter, ...) unnecessarily.
-
+- **If no array is provided, a new value will be computed on every render.**
 ____
 #### useRef()
 
