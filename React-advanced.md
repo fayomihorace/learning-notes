@@ -77,6 +77,9 @@ let ref = React.CreateRef
 <Component ref={ref} />
 ```
 - We can also use ***Callback Refs*** a function version of refs.
+  Mutating the dom `ref` doesn’t cause a re-render. If you want to run some code when React attaches or detaches a ref to a DOM node, you may want to use a callback ref instead.
+
+
 
 ### Forwarding Refs
 Ref forwarding is a technique for automatically passing a ref through a component to one of its children.
